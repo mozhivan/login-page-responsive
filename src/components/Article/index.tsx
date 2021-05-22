@@ -35,7 +35,7 @@ const useStyles = createUseStyles((theme: Theme) => ({
     margin: '13px 0 0',
     fontSize: '13px',
     lineHeight: 1.38,
-    color: theme.colors.greyish,
+    color: theme.colors.primary,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
 

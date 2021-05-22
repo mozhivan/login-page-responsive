@@ -46,13 +46,13 @@ export const App = () => {
           <div className={classes.appSubHeader}>Please sign in to continue</div>
           <hr className={classes.separator} />
           <div className={classes.logo}><Logo /></div>
-          <Input label='Username' />
-          <Input label='Password' type='password' />
+          <Input label='Username' className={classes.formInput} />
+          <Input label='Password' className={classes.formInput} type='password' />
           <div className={clsx(rowBetween, classes.buttons)}>
             <Button type='submit' >Sign In</Button>
             <Button variant='text'>Forgot password?</Button>
           </div>
-          <hr className={classes.separator} />
+          <hr className={clsx(classes.separator, classes.separatorBottom)} />
           <div className={clsx(rowBetween, classes.articles)}>
             <Article
               title='LATEST BLOG POST'
@@ -96,12 +96,25 @@ const useStyles = createUseStyles((theme: Theme) => ({
       backgroundColor: theme.colors.darkGrey,
       border: 'none',
     },
+    button: {
+      cursor: 'pointer',
+
+      '&:hover': {
+        opacity: 0.7,
+      },
+    },
   },
   bgImage: {
     position: 'absolute',
     right: 0,
     height: '100%',
     objectFit: 'contain',
+
+    [`@media (max-width: ${theme.breakpoints.tablet})`]: {
+      height: 'auto',
+      width: '100%',
+      bottom: 0,
+    }, 
   },
   appContainer: {
     padding: 0,
@@ -112,23 +125,47 @@ const useStyles = createUseStyles((theme: Theme) => ({
   appHeader: {
     fontSize: '40px',
     fontWeight: 'bold',
+
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      fontSize: '26px',
+    }, 
   },
   appSubHeader: {
-    color: theme.colors.greyish,
+    color: theme.colors.primary,
     fontSize: '26px',
+
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      fontSize: '20px',
+    }, 
   },
   logo: {
     marginBottom: '20px',
+
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      marginBottom: '25px',
+    }, 
   },
   separator: {
     width: '400px',
-    margin: '24px 2px 31px 0',
+    margin: '24px 0 31px 0',
+
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      margin: '27px 0 29px 0',
+      width: '335px',
+    }, 
+  },
+  separatorBottom: {
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      display: 'none',
+    }, 
   },
   buttons: {
     padding: '7px 0',
   },
   articles: {
-
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      display: 'none',
+    }, 
   },
   formMask: {
     position: 'absolute',
@@ -136,25 +173,34 @@ const useStyles = createUseStyles((theme: Theme) => ({
     minWidth: '702px',
     opacity: '0.6',
     backgroundColor: theme.colors.black,
+
+    [`@media (max-width: ${theme.breakpoints.tablet})`]: {
+      width: '100%',
+    }, 
+
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      display: 'none',
+    }, 
   },
   formContainer: {
     zIndex: 100,
     height: '100%',
     padding: '113px 150px',
+
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      padding: '113px 0',
+      alignItems: 'center',
+      width: '100%',
+    }, 
   },
   formInputLabel: {
     height: '18.4px',
-    color: theme.colors.greyish,
+    color: theme.colors.primary,
   },
   formInput: {
-    width: '398px',
-    height: '44px',
-    margin: '9.5px 0 0 1px',
-    borderRadius: '3px',
-    border: 'solid 1px #151515',
-    backgroundColor: theme.colors.davyGray,
-    color: theme.colors.white,
-    fontSize: '20px',
-    padding: '0 13px',
+    [`@media (max-width: ${theme.breakpoints.mobile})`]: {
+      width: '309px',
+      marginBottom: '24px',
+    }, 
   },
 }))

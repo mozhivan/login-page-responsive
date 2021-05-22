@@ -1,21 +1,17 @@
-import { NoSubstitutionTemplateLiteral } from "typescript"
-
 const SPACE = 8
-
-export type Theme = {
-  space: NoSubstitutionTemplateLiteral
-  colors: Record<string, string>
-  spacing: (...values: number[]) => string
-}
 
 export const theme = {
   get space() {
     return SPACE
   },
+  breakpoints: {
+    mobile: '768px',
+    tablet: '992px',
+    desktop: '1200px',
+  },
   colors: {
-    primary: '',
-    secondary: '',
-    greyish: '#AAA',
+    primary: '#AAA',
+    secondary: '#4894d4',
     white: '#FFF',
     black: '#000',
     davyGray: '#555',
@@ -25,3 +21,5 @@ export const theme = {
     return values.map((value) => `${value * this.space}px`).join(', ')
   },
 }
+
+export type Theme = typeof theme

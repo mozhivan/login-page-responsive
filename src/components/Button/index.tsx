@@ -31,7 +31,7 @@ const useStyles = createUseStyles((theme: Theme) => ({
     height: '36px',
     padding: '9px 0 10px',
     borderRadius: '3px',
-    backgroundColor: '#4894d4',
+    backgroundColor: theme.colors.secondary,
     fontSize: '14px',
     fontWeight: 'bold',
     color: theme.colors.white,
@@ -40,14 +40,13 @@ const useStyles = createUseStyles((theme: Theme) => ({
     alignItems: 'center',
     border: 'none',
     outline: 'none',
-    cursor: 'pointer',
   },
   buttonText: {
     fontSize: '13px',
     textAlign: 'right',
     textDecoration: 'underline',
     background: 'none',
-    color: theme.colors.greyish,
+    color: theme.colors.primary,
   },
 }))
 

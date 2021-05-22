@@ -22,9 +22,9 @@ export const Input = (props: InputProps) => {
 
   return (
     <>
-      {label && <div className={classes.formInputLabel}>{label}</div>}
-      <div className={classes.formInputContainer}>
-        <input {...restProps} className={clsx(className, classes.formInput)} type={inputType}>
+      {label && <div className={classes.inputLabel}>{label}</div>}
+      <div className={clsx(className, classes.inputContainer)}>
+        <input {...restProps} className={classes.input} type={inputType}>
         </input>
         {type === 'password' && <button type='button' className={clsx(classes.showButton, !isPassword && classes.showButtonActive)} onClick={handleShowClick}>Show</button>}
       </div>
@@ -33,11 +33,11 @@ export const Input = (props: InputProps) => {
 }
 
 const useStyles = createUseStyles((theme: Theme) => ({
-  formInputLabel: {
+  inputLabel: {
     height: '18.4px',
-    color: theme.colors.greyish,
+    color: theme.colors.primary,
   },
-  formInputContainer: {
+  inputContainer: {
     width: '372px',
     height: '44px',
     margin: '9.5px 0 0 1px',
@@ -49,7 +49,7 @@ const useStyles = createUseStyles((theme: Theme) => ({
     alignItems: 'center',
     marginBottom: '16px',
   },
-  formInput: {
+  input: {
     border: 'none',
     backgroundColor: theme.colors.davyGray,
     color: theme.colors.white,
@@ -64,10 +64,10 @@ const useStyles = createUseStyles((theme: Theme) => ({
     outline: 'none',
     fontSize: '12px',
     textAlign: 'right',
-    color: theme.colors.greyish,
+    color: theme.colors.primary,
   },
   showButtonActive: {
-    color: '#4894d4',
+    color: theme.colors.secondary,
   },
 }))
 
