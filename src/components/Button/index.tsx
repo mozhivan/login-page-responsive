@@ -40,6 +40,7 @@ const useStyles = createUseStyles((theme: Theme) => ({
     alignItems: 'center',
     border: 'none',
     outline: 'none',
+    cursor: 'pointer',
   },
   buttonText: {
     fontSize: '13px',

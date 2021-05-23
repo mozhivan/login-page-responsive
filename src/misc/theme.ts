@@ -14,11 +14,14 @@ export const theme = {
     secondary: '#4894d4',
     white: '#FFF',
     black: '#000',
+    whiteGray: '#f7f7f7',
+    warmGray: '#999',
+    lightGray: '#CCC',
     davyGray: '#555',
     darkGrey: '#333',
   },
   spacing(...values: number[]) {
-    return values.map((value) => `${value * this.space}px`).join(', ')
+    return values.map((value) => `${value * this.space}px`).join(' ')
   },
 }
 
