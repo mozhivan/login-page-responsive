@@ -3,8 +3,7 @@ import { createUseStyles } from 'react-jss'
 import clsx from 'clsx'
 
 import { Theme } from 'misc/theme'
-
-type ButtonVariant = 'filled' | 'text'
+import { ButtonVariant } from 'models'
 
 type ButtonProps = {
   variant?: ButtonVariant

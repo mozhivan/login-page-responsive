@@ -10,7 +10,7 @@ export const Portal = ({ children, id }: PropsWithChildren<Props>) => {
 
   useEffect(() => {
     setcontainerElement(document.getElementById(id));
-  }, []);
+  }, [id]);
 
   if (!containerElement) {
     return null;

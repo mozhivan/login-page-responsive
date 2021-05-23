@@ -1,35 +1,18 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
-import { useSelector, useDispatch } from 'react-redux'
 
 import { Background } from 'components/Background'
 import { AuthForm } from 'containers/AuthForm'
 import { ResetPasswordModal } from 'containers/ResetPasswordModal'
-import { InfoModal } from 'containers/InfoModal'
-import { RootState } from 'misc/rootReducer'
+import { EmailSentModal } from 'containers/EmailSentModal'
 import { Theme } from 'misc/theme'
-import { addCount, minusCount } from './counter'
-
-export const incrementAsync = () => ({
-  type: 'INCREMENT_ASYNC',
-})
 
 export const App = () => {
-  const dispatch = useDispatch()
   const classes = useStyles()
-  const { clicks } = useSelector((state: RootState) => state.count)
-
-  const increment = (page: number) => {
-    dispatch(addCount(page))
-  }
-
-  const decrement = (page: number) => {
-    dispatch(minusCount(page))
-  }
 
   return (
     <div className={classes.appContainer}>
-      <InfoModal />
+      <EmailSentModal />
       <ResetPasswordModal />
       <Background />
       <AuthForm />
@@ -60,6 +43,14 @@ const useStyles = createUseStyles((theme: Theme) => ({
 
       '&:hover': {
         opacity: 0.7,
+      },
+      '&:disabled': {
+        backgroundColor: theme.colors.darkGrey,
+        cursor: 'default',
+
+        '&:hover': {
+          opacity: 1,
+        },
       },
     },
   },

@@ -9,6 +9,7 @@ import { Theme } from 'misc/theme'
 
 type Props = {
   open: boolean
+  loading?: boolean
   headerContent: React.ReactNode
   cancelButtonText?: string
   okButtonText?: string
@@ -23,6 +24,7 @@ export const Modal = (props: PropsWithChildren<Props>) => {
     headerContent,
     className,
     children,
+    loading,
     cancelButtonText = 'Cancel',
     okButtonText = 'Submit',
     onOk,
@@ -30,29 +32,38 @@ export const Modal = (props: PropsWithChildren<Props>) => {
   } = props
   const classes = useStyles()
   const { columnCenter, columnStart, center, rowBetween, rowStart } = useCommonStyles()
+  
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault()
+    if (onOk) {
+      onOk()
+    }
+  }
 
   return (
     <>
       {open && (
         <Portal id='modal'>
           <div className={classes.presentation} />
-          <div className={clsx(center, classes.modalContainer)}>
-            <div className={clsx(className, columnCenter, classes.modalRoot)}>
-              <div className={clsx(rowBetween, classes.modalHeader)}>
-                {headerContent}
-                <button onClick={onCancel} className={clsx(center, classes.closeButton)}><span role='img' aria-label='close'>❌</span></button>
-              </div>
-              <div className={clsx(columnStart, classes.modalContent)}>
-                {children}
-              </div>
-              {onOk && (
-                <div className={clsx(rowStart, classes.modalButtons)}>
-                  <Button onClick={onOk}>{okButtonText}</Button>
-                  <Button className={classes.cancelButton} onClick={onCancel}>{cancelButtonText}</Button>
+          <form onSubmit={handleSubmit}>
+            <div className={clsx(center, classes.modalContainer)}>
+              <div className={clsx(className, columnCenter, classes.modalRoot)}>
+                <div className={clsx(rowBetween, classes.modalHeader)}>
+                  {headerContent}
+                  <button onClick={onCancel} className={clsx(center, classes.closeButton)}><span role='img' aria-label='close'>❌</span></button>
                 </div>
-              )}
+                <div className={clsx(columnStart, classes.modalContent)}>
+                  {children}
+                </div>
+                {onOk && (
+                  <div className={clsx(rowStart, classes.modalButtons)}>
+                    <Button type='submit' disabled={loading}>{okButtonText}</Button>
+                    <Button className={classes.cancelButton} onClick={onCancel}>{cancelButtonText}</Button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          </form>
         </Portal>
       )}
     </>

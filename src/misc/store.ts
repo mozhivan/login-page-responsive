@@ -1,31 +1,22 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
-import { createInjectorsEnhancer } from 'redux-injectors'
 
-import createReducer from './rootReducer'
-import rootSaga from '../sagas'
+import rootSaga from 'sagas'
+import { rootReducer } from './rootReducer'
+
 export default function configureAppStore(initialState = {}) {
-  const reduxSagaMonitorOptions = {}
-  const sagaMiddleware = createSagaMiddleware(reduxSagaMonitorOptions)
+  const sagaMiddleware = createSagaMiddleware()
 
-  const { run: runSaga } = sagaMiddleware
-
-  // sagaMiddleware: Makes redux-sagas work
-  const middlewares = [sagaMiddleware]
-
-  const enhancers = [
-    createInjectorsEnhancer({
-      createReducer,
-      runSaga,
-    }),
-  ]
+  const middleware = [
+    ...getDefaultMiddleware({ thunk: false }),
+    sagaMiddleware,
+  ];
 
   const store = configureStore({
-    reducer: createReducer(),
-    middleware: [...getDefaultMiddleware(), ...middlewares],
+    reducer: rootReducer,
+    middleware,
     preloadedState: initialState,
     devTools: process.env.NODE_ENV !== 'production',
-    enhancers,
   })
 
   sagaMiddleware.run(rootSaga)

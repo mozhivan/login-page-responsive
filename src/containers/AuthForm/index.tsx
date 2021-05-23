@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useCallback } from 'react'
 import { createUseStyles } from 'react-jss'
 import { useSelector, useDispatch } from 'react-redux'
 import clsx from 'clsx'
@@ -7,41 +7,59 @@ import { ReactComponent as Logo } from 'assets/icons/logo.svg'
 import { Article } from 'components/Article'
 import { Input } from 'components/Input'
 import { Button } from 'components/Button'
+import { authenticate } from 'state/app'
+import { showModal } from 'state/modal'
 import { useCommonStyles } from 'misc/styles'
 import { Theme } from 'misc/theme'
+import { RootState } from 'misc/rootReducer'
 
 export const AuthForm = () => {
   const dispatch = useDispatch()
   const classes = useStyles()
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const formRef = useRef<HTMLFormElement>()
+  const { loading } = useSelector((state: RootState) => state.app)
   const { columnStart, rowBetween } = useCommonStyles()
 
-  const handleSubmit = () => {
-    console.log('handleSubmit')
-  }
+  const resetFrom = useCallback(() => {
+    formRef.current?.reset()
+  }, [])
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-  }
+  const getAuthData = useCallback((formData: FormData) => {
+    const email = formData.get('email') as string || ''
+    const password = formData.get('password') as string || ''
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
-  }
+    return ({ email, password })
+  }, [])
 
+  const handleSubmit = useCallback((event: React.MouseEvent<HTMLFormElement, MouseEvent>) => {
+    event.preventDefault()
+    const data = new FormData(formRef.current);
+    const { email, password } = getAuthData(data)
+
+    if (email && password) {
+      dispatch(authenticate({ email, password }))
+      resetFrom()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, formRef.current])
+
+  const handleOpenModal = useCallback(() => {
+    dispatch(showModal({ modalType: 'reset-password' }))
+  }, [dispatch])
 
   return (
     <>
       <div className={classes.formMask} />
       <div className={clsx(columnStart, classes.formContainer)}>
-        <form>
+        <form ref={formRef as React.LegacyRef<HTMLFormElement>} onSubmit={handleSubmit}>
           <div className={classes.formHeader}>Welcome</div>
           <div className={classes.formSubHeader}>Please sign in to continue</div>
           <hr className={classes.separator} />
           <div className={classes.logo}><Logo /></div>
-          <Input label='Username' className={classes.formInput} />
-          <Input label='Password' className={classes.formInput} type='password' />
+          <Input className={classes.formInput} label='Username' name='email' type='email' required />
+          <Input className={classes.formInput} label='Password' name='password' type='password' minLength={8} required />
           <div className={clsx(rowBetween, classes.buttons)}>
-            <Button type='submit' >Sign In</Button>
+            <Button type='submit' disabled={loading} >Sign In</Button>
             <Button variant='text' onClick={handleOpenModal}>Forgot password?</Button>
           </div>
           <hr className={clsx(classes.separator, classes.separatorBottom)} />

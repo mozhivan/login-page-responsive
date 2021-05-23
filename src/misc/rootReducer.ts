@@ -1,21 +1,12 @@
 
 import { combineReducers } from '@reduxjs/toolkit'
 
-import clicksReducer from '../counter'
-
-const clicks = { count: clicksReducer }
+import modal from 'state/modal'
+import app from 'state/app'
 
 export let rootReducer = combineReducers({
-  ...clicks
+  modal,
+  app,
 })
-
-export default function createReducer(injectedReducers = {}) {
-  rootReducer = combineReducers({
-    ...clicks,
-    ...injectedReducers,
-  })
-
-  return rootReducer
-}
 
 export type RootState = ReturnType<typeof rootReducer>
